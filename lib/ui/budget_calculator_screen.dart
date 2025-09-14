@@ -1,4 +1,7 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:ssf_app/domain/budget_export_service.dart';
+import '../data/budget_category.dart';
 
 class BudgetCalculatorScreen extends StatefulWidget {
   const BudgetCalculatorScreen({super.key});
@@ -9,84 +12,155 @@ class BudgetCalculatorScreen extends StatefulWidget {
 
 class _BudgetCalculatorScreenState extends State<BudgetCalculatorScreen> {
   final TextEditingController incomeController = TextEditingController();
-  final TextEditingController rentController = TextEditingController();
-  final TextEditingController foodController = TextEditingController();
-  final TextEditingController transportController = TextEditingController();
-  final TextEditingController insuranceController = TextEditingController();
-  final TextEditingController miscController = TextEditingController();
+  final BudgetExportService exportService = BudgetExportService();
+
+  late List<BudgetCategory> categories;
 
   double? result;
 
+  @override
+  void initState() {
+    super.initState();
+    categories = [
+      BudgetCategory(
+        name: "Wohnen",
+        items: [
+          BudgetItem(label: "Miete / Hypothek"),
+          BudgetItem(label: "Nebenkosten"),
+        ],
+      ),
+      BudgetCategory(
+        name: "Ernährung",
+        items: [
+          BudgetItem(label: "Lebensmittel"),
+          BudgetItem(label: "Restaurant / Take-Away"),
+        ],
+      ),
+      BudgetCategory(
+        name: "Mobilität",
+        items: [
+          BudgetItem(label: "ÖV"),
+          BudgetItem(label: "Auto (Versicherung, Benzin, Service)"),
+        ],
+      ),
+      BudgetCategory(
+        name: "Gesundheit & Versicherungen",
+        items: [
+          BudgetItem(label: "Krankenkasse"),
+          BudgetItem(label: "Zusatzversicherungen"),
+        ],
+      ),
+      BudgetCategory(
+        name: "Freizeit & Kultur",
+        items: [
+          BudgetItem(label: "Ferien"),
+          BudgetItem(label: "Hobbys, Sport, Kino"),
+        ],
+      ),
+      BudgetCategory(
+        name: "Sparen & Vorsorge",
+        items: [
+          BudgetItem(label: "Säule 3a"),
+          BudgetItem(label: "Wertschriften / Investments"),
+        ],
+      ),
+    ];
+  }
+
   void calculateBudget() {
     double income = double.tryParse(incomeController.text) ?? 0.0;
-    double rent = double.tryParse(rentController.text) ?? 0.0;
-    double food = double.tryParse(foodController.text) ?? 0.0;
-    double transport = double.tryParse(transportController.text) ?? 0.0;
-    double insurance = double.tryParse(insuranceController.text) ?? 0.0;
-    double misc = double.tryParse(miscController.text) ?? 0.0;
+    double expenses = 0.0;
 
-    double expenses = rent + food + transport + insurance + misc;
+    for (var category in categories) {
+      for (var item in category.items) {
+        expenses += item.value;
+      }
+    }
+
     setState(() {
       result = income - expenses;
     });
   }
 
+  Widget _buildCategory(BudgetCategory category) {
+    return ExpansionTile(
+      title: Text(
+        category.name,
+        style: const TextStyle(fontWeight: FontWeight.bold),
+      ),
+      children: category.items.map((item) {
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+          child: TextField(
+            decoration: InputDecoration(labelText: item.label),
+            keyboardType: TextInputType.number,
+            onChanged: (val) {
+              setState(() {
+                item.value = double.tryParse(val) ?? 0.0;
+              });
+            },
+          ),
+        );
+      }).toList(),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Budget Calculator')),
+      appBar: AppBar(title: const Text("Budgetrechner")),
       body: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(12),
         child: ListView(
           children: [
             TextField(
               controller: incomeController,
-              decoration: const InputDecoration(labelText: 'Monthly Income (CHF)'),
-              keyboardType: TextInputType.number,
-            ),
-            TextField(
-              controller: rentController,
-              decoration: const InputDecoration(labelText: 'Rent (CHF)'),
-              keyboardType: TextInputType.number,
-            ),
-            TextField(
-              controller: foodController,
-              decoration: const InputDecoration(labelText: 'Food (CHF)'),
-              keyboardType: TextInputType.number,
-            ),
-            TextField(
-              controller: transportController,
-              decoration: const InputDecoration(labelText: 'Transport (CHF)'),
-              keyboardType: TextInputType.number,
-            ),
-            TextField(
-              controller: insuranceController,
-              decoration: const InputDecoration(labelText: 'Insurances (CHF)'),
-              keyboardType: TextInputType.number,
-            ),
-            TextField(
-              controller: miscController,
-              decoration: const InputDecoration(labelText: 'Miscellaneous (CHF)'),
+              decoration: const InputDecoration(
+                labelText: "Monatliches Einkommen (CHF)",
+              ),
               keyboardType: TextInputType.number,
             ),
             const SizedBox(height: 20),
+            ...categories.map(_buildCategory),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: calculateBudget,
-              child: const Text('Calculate Budget'),
+              child: const Text("Budget berechnen"),
+            ),
+            const SizedBox(height: 10),
+            ElevatedButton(
+              onPressed: () async => _exportToExcel(context),
+              child: const Text("Als Excel exportieren"),
             ),
             const SizedBox(height: 20),
             if (result != null)
               Text(
-                'Monthly Balance: ${result!.toStringAsFixed(2)} CHF',
+                "Monatlicher Saldo: ${result!.toStringAsFixed(2)} CHF",
                 style: TextStyle(
-                  color: result! >= 0 ? Colors.green : Colors.red,
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
+                  color: result! >= 0 ? Colors.green : Colors.red,
                 ),
               ),
           ],
         ),
       ),
     );
+  }
+
+  Future<void> _exportToExcel(BuildContext context) async {
+    final income = double.tryParse(incomeController.text) ?? 0.0;
+    final saldo = result ?? 0.0;
+    if (kIsWeb) {
+      exportService.exportExcelWeb();
+    } else {
+      final file = await exportService.exportToExcel(categories, income, saldo);
+    
+    ScaffoldMessenger.of(
+      // ignore: use_build_context_synchronously
+      // ignore: use_build_context_synchronously
+      context,
+    ).showSnackBar(SnackBar(content: Text("Budget exportiert: ${file.path}")));
+    }
   }
 }
