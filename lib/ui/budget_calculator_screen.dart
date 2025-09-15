@@ -152,15 +152,17 @@ class _BudgetCalculatorScreenState extends State<BudgetCalculatorScreen> {
     final income = double.tryParse(incomeController.text) ?? 0.0;
     final saldo = result ?? 0.0;
     if (kIsWeb) {
-      exportService.exportExcelWeb();
+      exportService.exportToExcelWeb(categories, income, saldo);
     } else {
       final file = await exportService.exportToExcel(categories, income, saldo);
-    
-    ScaffoldMessenger.of(
-      // ignore: use_build_context_synchronously
-      // ignore: use_build_context_synchronously
-      context,
-    ).showSnackBar(SnackBar(content: Text("Budget exportiert: ${file.path}")));
+
+      ScaffoldMessenger.of(
+        // ignore: use_build_context_synchronously
+        // ignore: use_build_context_synchronously
+        context,
+      ).showSnackBar(
+        SnackBar(content: Text("Budget exportiert: ${file.path}")),
+      );
     }
   }
 }

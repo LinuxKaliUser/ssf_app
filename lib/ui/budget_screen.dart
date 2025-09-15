@@ -62,13 +62,6 @@ class _BudgetScreenState extends State<BudgetScreen> {
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          FloatingActionButton(
-            heroTag: "addTx",
-            onPressed: () async {
-              await Navigator.pushNamed(context, AppRoutes.addTransaction);
-            },
-            child: const Icon(Icons.add),
-          ),
           const SizedBox(height: 10),
           FloatingActionButton(
             heroTag: "calc",
