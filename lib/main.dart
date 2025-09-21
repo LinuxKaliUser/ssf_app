@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:ssf_app/app_theme.dart';
+import 'package:ssf_app/ui/budget_home.dart';
 import 'package:ssf_app/ui/budget_screen.dart';
 import 'package:ssf_app/ui/budget_calculator_screen.dart';
+import 'package:ssf_app/ui/elearning_screen.dart';
+import 'package:ssf_app/ui/finance_plan_form.dart';
 import 'package:ssf_app/ui/finance_planning_screen.dart';
 
 void main() {
@@ -19,15 +22,17 @@ class _FinanceAppState extends State<FinanceApp> {
   int _selectedIndex = 0;
 
   final List<Widget> _screens = const [
-    BudgetScreen(),
-    BudgetCalculatorScreen(),
+    FinancePlanningApp(),
+    BudgetHome(),
     FinancePlanningScreen(),
+    ElearningScreen(),
   ];
 
   final List<String> _titles = const [
     "Übersicht",
-    "Budget Rechner",
+    "Budget",
     "Finanz- & Steuerplanung",
+    "E-Learning",
   ];
 
   void _onItemTapped(int index) {
@@ -49,16 +54,20 @@ class _FinanceAppState extends State<FinanceApp> {
           onTap: _onItemTapped,
           items: const [
             BottomNavigationBarItem(
-              icon: Icon(Icons.dashboard),
+              icon: Icon(Icons.dashboard, color: Colors.blue),
               label: "Übersicht",
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.calculate),
+              icon: Icon(Icons.calculate, color: Colors.blue),
               label: "Rechner",
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.assessment),
+              icon: Icon(Icons.assessment, color: Colors.blue),
               label: "Planung",
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.school, color: Colors.blue),
+              label: "E-Lernen",
             ),
           ],
         ),

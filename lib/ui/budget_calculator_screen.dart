@@ -4,7 +4,9 @@ import 'package:ssf_app/domain/budget_export_service.dart';
 import '../data/budget_category.dart';
 
 class BudgetCalculatorScreen extends StatefulWidget {
-  const BudgetCalculatorScreen({super.key});
+  final Function(double income, double expenses)? onUpdate;
+
+  const BudgetCalculatorScreen({super.key, this.onUpdate});
 
   @override
   State<BudgetCalculatorScreen> createState() => _BudgetCalculatorScreenState();
@@ -67,19 +69,20 @@ class _BudgetCalculatorScreenState extends State<BudgetCalculatorScreen> {
     ];
   }
 
+
   void calculateBudget() {
     double income = double.tryParse(incomeController.text) ?? 0.0;
-    double expenses = 0.0;
-
-    for (var category in categories) {
-      for (var item in category.items) {
-        expenses += item.value;
-      }
-    }
+    double expenses = categories.fold(
+      0.0,
+      (sum, c) => sum + c.items.fold(0.0, (s, i) => s + i.value),
+    );
 
     setState(() {
       result = income - expenses;
     });
+
+    // Update parent overview with new totals
+    widget.onUpdate!(income, expenses);
   }
 
   Widget _buildCategory(BudgetCategory category) {
@@ -105,7 +108,7 @@ class _BudgetCalculatorScreenState extends State<BudgetCalculatorScreen> {
     );
   }
 
-  @override
+    @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text("Budgetrechner")),
@@ -115,38 +118,39 @@ class _BudgetCalculatorScreenState extends State<BudgetCalculatorScreen> {
           children: [
             TextField(
               controller: incomeController,
-              decoration: const InputDecoration(
-                labelText: "Monatliches Einkommen (CHF)",
-              ),
+              decoration: const InputDecoration(labelText: "Einkommen"),
               keyboardType: TextInputType.number,
             ),
-            const SizedBox(height: 20),
-            ...categories.map(_buildCategory),
-            const SizedBox(height: 20),
+            ...categories.map((c) => ExpansionTile(
+                  title: Text(c.name),
+                  children: c.items.map((i) {
+                    return TextField(
+                      decoration: InputDecoration(labelText: i.label),
+                      keyboardType: TextInputType.number,
+                      onChanged: (val) {
+                        i.value = double.tryParse(val) ?? 0.0;
+                      },
+                    );
+                  }).toList(),
+                )),
             ElevatedButton(
               onPressed: calculateBudget,
-              child: const Text("Budget berechnen"),
+              child: const Text("Berechnen"),
             ),
-            const SizedBox(height: 10),
+             const SizedBox(height: 10),
             ElevatedButton(
               onPressed: () async => _exportToExcel(context),
               child: const Text("Als Excel exportieren"),
             ),
             const SizedBox(height: 20),
             if (result != null)
-              Text(
-                "Monatlicher Saldo: ${result!.toStringAsFixed(2)} CHF",
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: result! >= 0 ? Colors.green : Colors.red,
-                ),
-              ),
+              Text("Saldo: ${result!.toStringAsFixed(2)} CHF"),
           ],
         ),
       ),
     );
   }
+
 
   Future<void> _exportToExcel(BuildContext context) async {
     final income = double.tryParse(incomeController.text) ?? 0.0;

@@ -71,7 +71,7 @@ class BudgetExportService {
 
     // Saldo
     sheet.appendRow([]);
-    sheet.appendRow(["Monatlicher Saldo", result]);
+    sheet.appendRow(["Monatlicher Saldo", result.toStringAsFixed(2)]);
 
     return excel;
   }
