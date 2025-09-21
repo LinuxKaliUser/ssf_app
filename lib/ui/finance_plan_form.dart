@@ -51,7 +51,7 @@ class _FinancePlanningPageState extends State<FinancePlanningPage> {
   final v3a5Ctrl = TextEditingController(text: '0');
   final steuerVorsorgeCtrl = TextEditingController(text: '0');
 
-  // Liquidit‰t
+  // LiquiditÔøΩt
   final liquiditaetKontoCtrl = TextEditingController(text: '0');
   final liquiditaetStartCtrl = TextEditingController(text: '0');
   final kapitalZugaengeCtrl = TextEditingController(text: '0');
@@ -154,7 +154,7 @@ class _FinancePlanningPageState extends State<FinancePlanningPage> {
       decoration: InputDecoration(labelText: label),
       validator: (v) {
         if (v == null || v.trim().isEmpty) return null; // allow empty
-        if (double.tryParse(v.replaceAll("'", '').replaceAll(',', '.')) == null) return 'Ung¸ltige Zahl';
+        if (double.tryParse(v.replaceAll("'", '').replaceAll(',', '.')) == null) return 'Ung√ºltige Zahl';
         return null;
       },
     );
@@ -177,17 +177,17 @@ class _FinancePlanningPageState extends State<FinancePlanningPage> {
               _numberField('Pensionskasse rente Basis', pkBasisCtrl),
               _numberField('Pensionskasse rente Zusatz', pkZusatzCtrl),
               const SizedBox(height: 12),
-              Text('Total Einnahmen ohne Wertschriftenertr‰ge: CHF ${totalEinnahmen.toStringAsFixed(2)}', style: const TextStyle(fontWeight: FontWeight.w600)),
+              Text('Total Einnahmen ohne WertschriftenertrÔøΩge: CHF ${totalEinnahmen.toStringAsFixed(2)}', style: const TextStyle(fontWeight: FontWeight.w600)),
 
               const Divider(height: 24),
               const Text('Lebenshaltungskosten', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-              _numberField('Krankenkassenpr‰mien', kkCtrl),
+              _numberField('Krankenkassenpr√§mien', kkCtrl),
               _numberField('Ferien', ferienCtrl),
               _numberField('Miete', mieteCtrl),
               _numberField('Alimente', alimenteCtrl),
               _numberField('Hypothekarzins Wohnung', hypothekCtrl),
-              _numberField('Liegenschaft j‰hrlicher Unterhalt + Nebenkosten', unterhaltCtrl),
-              _numberField('S‰ule 3a', sauele3aCtrl),
+              _numberField('Liegenschaft j√§hrlicher Unterhalt + Nebenkosten', unterhaltCtrl),
+              _numberField('S√§ule 3a', sauele3aCtrl),
               _numberField('Einkauf Pensionskasse basis', einkaufPkBasisCtrl),
               _numberField('Einkauf Pensionskasse Zusatz', einkaufPkZusatzCtrl),
               _numberField('Steuern Bund und Kanton ca.', steuernCtrl),
@@ -199,10 +199,10 @@ class _FinancePlanningPageState extends State<FinancePlanningPage> {
 
               const Divider(height: 24),
               const Text('Vorsorgegelder', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-              _numberField('Vorsorgekonto 3a 1 everon', v3a1Ctrl),
-              _numberField('Vorsorgekonto 3a 2 finpension', v3a2Ctrl),
-              _numberField('Vorsorgekonto 3a 3 BLKB', v3a3Ctrl),
-              _numberField('Vorsorgekonto 3a 4 Valiant', v3a4Ctrl),
+              _numberField('Vorsorgekonto 3a 1', v3a1Ctrl),
+              _numberField('Vorsorgekonto 3a 2', v3a2Ctrl),
+              _numberField('Vorsorgekonto 3a 3', v3a3Ctrl),
+              _numberField('Vorsorgekonto 3a 4', v3a4Ctrl),
               _numberField('Vorsorgekonto 3a 5', v3a5Ctrl),
               _numberField('Steuern Bund und Kanton ca. auf Vorsorgekapital', steuerVorsorgeCtrl),
 
@@ -212,12 +212,12 @@ class _FinancePlanningPageState extends State<FinancePlanningPage> {
               Text('Steuerbelastung in % der Auszahlung: ${steuerBelastungPercent.toStringAsFixed(2)} %', style: const TextStyle(fontWeight: FontWeight.w600)),
 
               const Divider(height: 24),
-              const Text('Liquidit‰tsplanung', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-              _numberField('Liquidit‰tskonto', liquiditaetKontoCtrl),
-              _numberField('Liquidit‰t zu Beginn des Jahres ca.', liquiditaetStartCtrl),
-              _numberField('Kapitalzug‰nge', kapitalZugaengeCtrl),
+              const Text('Liquidit√§tsplanung', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+              _numberField('Liquidit√§tskonto', liquiditaetKontoCtrl),
+              _numberField('Liquidit√§t zu Beginn des Jahres ca.', liquiditaetStartCtrl),
+              _numberField('Kapitalzug√§nge', kapitalZugaengeCtrl),
               const SizedBox(height: 8),
-              Text('Liquidit‰t Ende Jahr (approx): CHF ${liquiditaetEnde.toStringAsFixed(2)}', style: const TextStyle(fontWeight: FontWeight.w600)),
+              Text('Liquidit√§t Ende Jahr (approx): CHF ${liquiditaetEnde.toStringAsFixed(2)}', style: const TextStyle(fontWeight: FontWeight.w600)),
               Text('Differenz Einnahmen/Ausgaben (Sparquote): CHF ${sparquote.toStringAsFixed(2)}', style: const TextStyle(fontWeight: FontWeight.w600)),
 
               const SizedBox(height: 18),
@@ -238,7 +238,7 @@ class _FinancePlanningPageState extends State<FinancePlanningPage> {
                       // Reset to defaults or empty
                       _resetFields();
                     },
-                    child: const Text('Zur¸cksetzen'),
+                    child: const Text('Zur√ºcksetzen'),
                     style: ElevatedButton.styleFrom(backgroundColor: Colors.grey),
                   )
                 ],

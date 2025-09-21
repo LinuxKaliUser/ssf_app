@@ -32,16 +32,16 @@ class _BudgetCalculatorScreenState extends State<BudgetCalculatorScreen> {
         ],
       ),
       BudgetCategory(
-        name: "Ern‰hrung",
+        name: "Ern√§hrung",
         items: [
           BudgetItem(label: "Lebensmittel"),
           BudgetItem(label: "Restaurant / Take-Away"),
         ],
       ),
       BudgetCategory(
-        name: "Mobilit‰t",
+        name: "Mobilit√§t",
         items: [
-          BudgetItem(label: "÷V"),
+          BudgetItem(label: "√ñV"),
           BudgetItem(label: "Auto (Versicherung, Benzin, Service)"),
         ],
       ),
@@ -62,7 +62,7 @@ class _BudgetCalculatorScreenState extends State<BudgetCalculatorScreen> {
       BudgetCategory(
         name: "Sparen & Vorsorge",
         items: [
-          BudgetItem(label: "S‰ule 3a"),
+          BudgetItem(label: "S√§ule 3a"),
           BudgetItem(label: "Wertschriften / Investments"),
         ],
       ),

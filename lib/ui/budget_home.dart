@@ -66,7 +66,7 @@ class _BudgetHomeState extends State<BudgetHome>
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   const Text(
-                    "Finanzübersicht",
+                    "FinanzÃ¼bersicht",
                     textAlign: TextAlign.center,
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),

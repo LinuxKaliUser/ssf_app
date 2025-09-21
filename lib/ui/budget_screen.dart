@@ -33,7 +33,7 @@ class _BudgetScreenState extends State<BudgetScreen> {
     final result = await showDialog<double>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('Budget für diesen Monat festlegen'),
+        title: const Text('Budget fÃ¼r diesen Monat festlegen'),
         content: TextField(
           controller: controller,
           keyboardType: const TextInputType.numberWithOptions(decimal: true),
@@ -73,7 +73,7 @@ class _BudgetScreenState extends State<BudgetScreen> {
     final result = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('Transaktion hinzufügen'),
+        title: const Text('Transaktion hinzufÃ¼gen'),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -213,7 +213,7 @@ class _BudgetScreenState extends State<BudgetScreen> {
             heroTag: "add_tx",
             backgroundColor: Colors.green,
             onPressed: _addTransaction,
-            tooltip: "Transaktion hinzufügen",
+            tooltip: "Transaktion hinzufÃ¼gen",
             child: const Icon(Icons.add),
           ),
         ],

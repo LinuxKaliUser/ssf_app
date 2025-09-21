@@ -27,22 +27,22 @@ class _ElearningScreenState extends State<ElearningScreen> {
     'budget':
         'Wie man ein realistisches Monatsbudget erstellt, fixe vs. variable Ausgaben, Notgroschen.',
     'sparen':
-        'Sparstrategien, Sparrate erhöhen, automatische Sparpläne, Notfallreserve.',
+        'Sparstrategien, Sparrate erhÃ¶hen, automatische SparplÃ¤ne, Notfallreserve.',
     'invest':
-        'Grundlagen Aktien/ETFs, Diversifikation, Risiko vs. Rendite, Kosten (TER, Gebühren).',
+        'Grundlagen Aktien/ETFs, Diversifikation, Risiko vs. Rendite, Kosten (TER, GebÃ¼hren).',
     'steuer':
-        'Grundzüge der Steuererklärung, Abzüge nutzen, Quellensteuer, Steuerplanung für Vorsorge.',
+        'Grundlagen der SteuererklÃ¤rung, AbzÃ¼ge nutzen, Quellensteuer, Steuerplanung fÃ¼r Vorsorge.',
     'altersvorsorge':
-        '3-Säulen System CH, Pensionskasse, Säule 3a, Renten vs. Kapital.',
+        '3-SÃ¤ulen System CH, Pensionskasse, SÃ¤ule 3a, Renten vs. Kapital.',
   };
 
   Future<void> _openTopic(BuildContext context, _Topic topic) async {
-    // öffne detailseite; die Seite kann beim Schliessen true zurückgeben (markieren als erledigt)
+    // ï¿½ffne detailseite; die Seite kann beim Schliessen true zurï¿½ckgeben (markieren als erledigt)
     final bool? completed = await Navigator.of(context).push<bool>(
       MaterialPageRoute(
         builder: (_) => TopicDetailPage(
           title: topic.title,
-          content: _topicContent[topic.id] ?? 'Inhalt nicht verfügbar.',
+          content: _topicContent[topic.id] ?? 'Inhalt nicht verfÃ¼gbar.',
         ),
       ),
     );
@@ -77,7 +77,7 @@ class _ElearningScreenState extends State<ElearningScreen> {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    'Wähle ein Thema aus und arbeite die Lerninhalte durch. Dein Fortschritt wird angezeigt.',
+                    'WÃ¤hle ein Thema aus und arbeite die Lerninhalte durch. Dein Fortschritt wird angezeigt.',
                     style: TextStyle(color: Colors.grey.shade700),
                   ),
                   const SizedBox(height: 12),
@@ -153,7 +153,7 @@ class TopicDetailPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(title),
-        // kleiner Button, um Thema als erledigt zurückzumelden
+        // kleiner Button, um Thema als erledigt zurï¿½ckzumelden
         actions: [
           IconButton(
             icon: const Icon(Icons.check),

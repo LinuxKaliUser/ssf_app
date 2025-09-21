@@ -42,7 +42,7 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: _submit,
-              child: const Text("Hinzufügen"),
+              child: const Text("HinzufÃ¼gen"),
             ),
           ],
         ),
