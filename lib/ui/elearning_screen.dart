@@ -14,6 +14,9 @@ class _ElearningScreenState extends State<ElearningScreen> {
     _Topic(id: 'invest', title: 'Investitions-Grundlagen'),
     _Topic(id: 'steuer', title: 'Steuerplanung'),
     _Topic(id: 'altersvorsorge', title: 'Altersvorsorge'),
+    _Topic(id: 'versicherungen', title: 'Versicherungen'),
+    _Topic(id: 'immobilien', title: 'Immobilien'),
+    _Topic(id: 'dokumenten vorsorge', title: 'Dokumenten Vorsorge'),
   ];
 
   // lokal: welche Themen als erledigt markiert wurden
@@ -34,6 +37,12 @@ class _ElearningScreenState extends State<ElearningScreen> {
         'Grundlagen der Steuererklärung, Abzüge nutzen, Quellensteuer, Steuerplanung für Vorsorge.',
     'altersvorsorge':
         '3-Säulen System CH, Pensionskasse, Säule 3a, Renten vs. Kapital.',
+    'versicherungen':
+        'Wichtige Versicherungen (Haftpflicht, Hausrat, Rechtsschutz, usw.',
+    'immobilien':
+        'Hypothekenarten, Nebenkosten, Eigenkapital, Tragbarkeit.',
+    'dokumenten vorsorge':
+        'Wichtige Dokumente Testament, Vorsorgeauftrag, Patientenverfügung.',
   };
 
   Future<void> _openTopic(BuildContext context, _Topic topic) async {
