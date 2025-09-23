@@ -32,15 +32,15 @@ class _ElearningScreenState extends State<ElearningScreen> {
     'sparen':
         'Sparstrategien, Sparrate erhöhen, automatische Sparpläne, Notfallreserve.',
     'invest':
-        'Grundlagen Aktien/ETFs, Diversifikation, Risiko vs. Rendite, Kosten (TER, Gebühren).',
+        'Grundlagen (Aktien, ETFs, Fonds, Obligationen, Optionen, Bitcoin), Diversifikation, Risiko vs. Rendite, Kosten (TER, Gebühren).',
     'steuer':
         'Grundlagen der Steuererklärung, Abzüge nutzen, Quellensteuer, Steuerplanung für Vorsorge.',
     'altersvorsorge':
-        '3-Säulen System CH, Pensionskasse, Säule 3a, Renten vs. Kapital.',
+        '3-Säulen System CH, Pensionskasse, Säule 3a / 3b, Renten vs. Kapital, Freizügikeitsdepot, AHV.',
     'versicherungen':
-        'Wichtige Versicherungen (Haftpflicht, Hausrat, Rechtsschutz, usw.',
+        'Wichtige Versicherungen (Haftpflicht, Hausrat, Rechtsschutz, Reiseversicherung, Autoversicherungen).',
     'immobilien':
-        'Hypothekenarten, Nebenkosten, Eigenkapital, Tragbarkeit.',
+        'Hypothekenarten, Nebenkosten, Eigenkapital, Tragbarkeit, direkte oder indirekte Amortisation.',
     'dokumenten vorsorge':
         'Wichtige Dokumente Testament, Vorsorgeauftrag, Patientenverfügung.',
   };
