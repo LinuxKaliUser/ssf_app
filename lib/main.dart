@@ -50,23 +50,28 @@ class _FinanceAppState extends State<FinanceApp> {
         appBar: AppBar(title: Text(_titles[_selectedIndex])),
         body: _screens[_selectedIndex],
         bottomNavigationBar: BottomNavigationBar(
+          backgroundColor: AppTheme.lightTheme.appBarTheme.backgroundColor,
           currentIndex: _selectedIndex,
           onTap: _onItemTapped,
-          items: const [
+          items: [
             BottomNavigationBarItem(
-              icon: Icon(Icons.dashboard, color: Colors.blue),
+              backgroundColor: AppTheme.lightTheme.appBarTheme.backgroundColor,
+              icon: Icon(Icons.dashboard),
               label: "Übersicht",
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.calculate, color: Colors.blue),
+              backgroundColor: AppTheme.lightTheme.appBarTheme.backgroundColor,
+              icon: Icon(Icons.calculate),
               label: "Rechner",
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.assessment, color: Colors.blue),
+              backgroundColor: AppTheme.lightTheme.appBarTheme.backgroundColor,
+              icon: Icon(Icons.assessment),
               label: "Planung",
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.school, color: Colors.blue),
+              backgroundColor: AppTheme.lightTheme.appBarTheme.backgroundColor,
+              icon: Icon(Icons.school),
               label: "E-Lernen",
             ),
           ],

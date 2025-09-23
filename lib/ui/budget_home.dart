@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ssf_app/app_theme.dart';
 import 'budget_calculator_screen.dart';
 import 'budget_screen.dart';
 
@@ -45,6 +46,8 @@ class _BudgetHomeState extends State<BudgetHome>
       appBar: AppBar(
         title: const Text("Finanzplanung"),
         bottom: TabBar(
+          labelColor: AppTheme.lightTheme.appBarTheme.foregroundColor,
+          unselectedLabelColor: AppTheme.lightTheme.scaffoldBackgroundColor,
           controller: _tabController,
           tabs: const [
             Tab(text: "Mein Budget"),
@@ -132,14 +135,14 @@ Widget _buildSummaryCard({
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Icon(Icons.arrow_downward, color: Colors.green, size: 18),
+              const Icon(Icons.arrow_upward, color: Colors.green, size: 18),
               Text("CHF ${income.toStringAsFixed(2)}"),
             ],
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Icon(Icons.arrow_upward, color: Colors.red, size: 18),
+              const Icon(Icons.arrow_downward, color: Colors.red, size: 18),
               Text("CHF ${expenses.toStringAsFixed(2)}"),
             ],
           ),
