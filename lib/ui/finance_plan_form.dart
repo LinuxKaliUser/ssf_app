@@ -170,17 +170,17 @@ class _FinancePlanningPageState extends State<FinancePlanningPage> {
           key: _formKey,
           child: ListView(
             children: [
-              const Text('Einnahmen', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+              const Text('Jahres Einnahmen', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
               _numberField('Einkommen', incomeCtrl),
               _numberField('Nebenerwerb', nebenerwerbCtrl),
               _numberField('AHV-Rente', ahvCtrl),
               _numberField('Pensionskasse rente Basis', pkBasisCtrl),
               _numberField('Pensionskasse rente Zusatz', pkZusatzCtrl),
               const SizedBox(height: 12),
-              Text('Total Einnahmen ohne Wertschriftenertr�ge: CHF ${totalEinnahmen.toStringAsFixed(2)}', style: const TextStyle(fontWeight: FontWeight.w600)),
+              Text('Total Einnahmen ohne Wertschriftenerträge: CHF ${totalEinnahmen.toStringAsFixed(2)}', style: const TextStyle(fontWeight: FontWeight.w600)),
 
               const Divider(height: 24),
-              const Text('Lebenshaltungskosten', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+              const Text('Lebenshaltungskosten pro Jahr', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
               _numberField('Krankenkassenprämien', kkCtrl),
               _numberField('Ferien', ferienCtrl),
               _numberField('Miete', mieteCtrl),
@@ -217,7 +217,7 @@ class _FinancePlanningPageState extends State<FinancePlanningPage> {
               _numberField('Liquidität zu Beginn des Jahres ca.', liquiditaetStartCtrl),
               _numberField('Kapitalzugänge', kapitalZugaengeCtrl),
               const SizedBox(height: 8),
-              Text('Liquidität Ende Jahr (approx): CHF ${liquiditaetEnde.toStringAsFixed(2)}', style: const TextStyle(fontWeight: FontWeight.w600)),
+              Text('Liquidität Ende Jahr (ca.): CHF ${liquiditaetEnde.toStringAsFixed(2)}', style: const TextStyle(fontWeight: FontWeight.w600)),
               Text('Differenz Einnahmen/Ausgaben (Sparquote): CHF ${sparquote.toStringAsFixed(2)}', style: const TextStyle(fontWeight: FontWeight.w600)),
 
               const SizedBox(height: 18),
