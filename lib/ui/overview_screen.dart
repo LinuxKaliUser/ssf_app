@@ -31,7 +31,7 @@ class OverviewScreen extends StatelessWidget {
     ];
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Übersicht')),
+      appBar: AppBar(title: const Text('Ãœbersicht')),
       body: ListView.builder(
         padding: const EdgeInsets.all(16),
         itemCount: modules.length,

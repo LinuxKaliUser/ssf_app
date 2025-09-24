@@ -30,7 +30,7 @@ class _FinanceAppState extends State<FinanceApp> {
   ];
 
   final List<String> _titles = const [
-    "Übersicht",
+    "Ãœbersicht",
     "Budget",
     "Finanz- & Steuerplanung",
     "E-Learning",
@@ -57,7 +57,7 @@ class _FinanceAppState extends State<FinanceApp> {
             BottomNavigationBarItem(
               backgroundColor: AppTheme.lightTheme.appBarTheme.backgroundColor,
               icon: Icon(Icons.dashboard),
-              label: "Übersicht",
+              label: "ï¿½bersicht",
             ),
             BottomNavigationBarItem(
               backgroundColor: AppTheme.lightTheme.appBarTheme.backgroundColor,
