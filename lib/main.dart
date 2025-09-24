@@ -1,3 +1,4 @@
+import 'package:ssf_app/ui/overview_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:ssf_app/app_theme.dart';
 import 'package:ssf_app/ui/budget_home.dart';
@@ -21,15 +22,15 @@ class FinanceApp extends StatefulWidget {
 class _FinanceAppState extends State<FinanceApp> {
   int _selectedIndex = 0;
 
-  final List<Widget> _screens = const [
-    FinancePlanningApp(),
-    BudgetHome(),
-    FinancePlanningScreen(),
-    ElearningScreen(),
+  final List<Widget> _screens = [
+    OverviewScreen(),
+    const BudgetHome(),
+    const FinancePlanningScreen(),
+    const ElearningScreen(),
   ];
 
   final List<String> _titles = const [
-    "Ãœbersicht",
+    "Übersicht",
     "Budget",
     "Finanz- & Steuerplanung",
     "E-Learning",
@@ -47,7 +48,6 @@ class _FinanceAppState extends State<FinanceApp> {
       title: 'Swiss Finance App',
       theme: AppTheme.lightTheme,
       home: Scaffold(
-        appBar: AppBar(title: Text(_titles[_selectedIndex])),
         body: _screens[_selectedIndex],
         bottomNavigationBar: BottomNavigationBar(
           backgroundColor: AppTheme.lightTheme.appBarTheme.backgroundColor,
@@ -57,12 +57,12 @@ class _FinanceAppState extends State<FinanceApp> {
             BottomNavigationBarItem(
               backgroundColor: AppTheme.lightTheme.appBarTheme.backgroundColor,
               icon: Icon(Icons.dashboard),
-              label: "Ãœbersicht",
+              label: "Übersicht",
             ),
             BottomNavigationBarItem(
               backgroundColor: AppTheme.lightTheme.appBarTheme.backgroundColor,
               icon: Icon(Icons.calculate),
-              label: "Rechner",
+              label: "Budget",
             ),
             BottomNavigationBarItem(
               backgroundColor: AppTheme.lightTheme.appBarTheme.backgroundColor,
@@ -72,7 +72,7 @@ class _FinanceAppState extends State<FinanceApp> {
             BottomNavigationBarItem(
               backgroundColor: AppTheme.lightTheme.appBarTheme.backgroundColor,
               icon: Icon(Icons.school),
-              label: "E-Lernen",
+              label: "E-Learning",
             ),
           ],
         ),

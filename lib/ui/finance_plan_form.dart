@@ -1,19 +1,5 @@
 import 'package:flutter/material.dart';
 
-
-class FinancePlanningApp extends StatelessWidget {
-  const FinancePlanningApp({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Finance & Tax Planner',
-      theme: ThemeData(primarySwatch: Colors.blue),
-      home: const FinancePlanningPage(),
-    );
-  }
-}
-
 class FinancePlanningPage extends StatefulWidget {
   const FinancePlanningPage({Key? key}) : super(key: key);
 
@@ -97,7 +83,11 @@ class _FinancePlanningPageState extends State<FinancePlanningPage> {
   }
 
   double _parse(TextEditingController c) {
-    final s = c.text.replaceAll("'", '').replaceAll('CHF', '').trim().replaceAll(',', '.');
+    final s = c.text
+        .replaceAll("'", '')
+        .replaceAll('CHF', '')
+        .trim()
+        .replaceAll(',', '.');
     return double.tryParse(s) ?? 0.0;
   }
 
@@ -121,7 +111,17 @@ class _FinancePlanningPageState extends State<FinancePlanningPage> {
     final einkaufZusatz = _parse(einkaufPkZusatzCtrl);
     final steuern = _parse(steuernCtrl);
 
-    totalAusgaben = kk + ferien + miete + alimente + hypothek + unterhalt + s3a + einkaufBasis + einkaufZusatz + steuern;
+    totalAusgaben =
+        kk +
+        ferien +
+        miete +
+        alimente +
+        hypothek +
+        unterhalt +
+        s3a +
+        einkaufBasis +
+        einkaufZusatz +
+        steuern;
 
     differenz = totalEinnahmen - totalAusgaben; // positive = savings
     sparquote = differenz; // for display; you may compute percentage separately
@@ -135,7 +135,9 @@ class _FinancePlanningPageState extends State<FinancePlanningPage> {
 
     totalVorsorge = v1 + v2 + v3 + v4 + v5;
     nettoVorsorge = totalVorsorge - steuerVorsorge;
-    steuerBelastungPercent = totalVorsorge > 0 ? (steuerVorsorge / totalVorsorge) * 100.0 : 0.0;
+    steuerBelastungPercent = totalVorsorge > 0
+        ? (steuerVorsorge / totalVorsorge) * 100.0
+        : 0.0;
 
     final liquidKonto = _parse(liquiditaetKontoCtrl);
     final liquidStart = _parse(liquiditaetStartCtrl);
@@ -154,7 +156,8 @@ class _FinancePlanningPageState extends State<FinancePlanningPage> {
       decoration: InputDecoration(labelText: label),
       validator: (v) {
         if (v == null || v.trim().isEmpty) return null; // allow empty
-        if (double.tryParse(v.replaceAll("'", '').replaceAll(',', '.')) == null) return 'Ungültige Zahl';
+        if (double.tryParse(v.replaceAll("'", '').replaceAll(',', '.')) == null)
+          return 'Ungültige Zahl';
         return null;
       },
     );
@@ -162,91 +165,137 @@ class _FinancePlanningPageState extends State<FinancePlanningPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Finance & Tax Planner')),
-      body: Padding(
-        padding: const EdgeInsets.all(12.0),
-        child: Form(
-          key: _formKey,
-          child: ListView(
-            children: [
-              const Text('Jahres Einnahmen', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-              _numberField('Einkommen', incomeCtrl),
-              _numberField('Nebenerwerb', nebenerwerbCtrl),
-              _numberField('AHV-Rente', ahvCtrl),
-              _numberField('Pensionskasse rente Basis', pkBasisCtrl),
-              _numberField('Pensionskasse rente Zusatz', pkZusatzCtrl),
-              const SizedBox(height: 12),
-              Text('Total Einnahmen ohne Wertschriftenerträge: CHF ${totalEinnahmen.toStringAsFixed(2)}', style: const TextStyle(fontWeight: FontWeight.w600)),
+    return Padding(
+      padding: const EdgeInsets.all(12.0),
+      child: Form(
+        key: _formKey,
+        child: ListView(
+          children: [
+            const Text(
+              'Jahres Einnahmen',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            _numberField('Einkommen', incomeCtrl),
+            _numberField('Nebenerwerb', nebenerwerbCtrl),
+            _numberField('AHV-Rente', ahvCtrl),
+            _numberField('Pensionskasse rente Basis', pkBasisCtrl),
+            _numberField('Pensionskasse rente Zusatz', pkZusatzCtrl),
+            const SizedBox(height: 12),
+            Text(
+              'Total Einnahmen ohne Wertschriftenerträge: CHF ${totalEinnahmen.toStringAsFixed(2)}',
+              style: const TextStyle(fontWeight: FontWeight.w600),
+            ),
 
-              const Divider(height: 24),
-              const Text('Lebenshaltungskosten pro Jahr', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-              _numberField('Krankenkassenprämien', kkCtrl),
-              _numberField('Ferien', ferienCtrl),
-              _numberField('Miete', mieteCtrl),
-              _numberField('Alimente', alimenteCtrl),
-              _numberField('Hypothekarzins Wohnung', hypothekCtrl),
-              _numberField('Liegenschaft jährlicher Unterhalt + Nebenkosten', unterhaltCtrl),
-              _numberField('Säule 3a', sauele3aCtrl),
-              _numberField('Einkauf Pensionskasse basis', einkaufPkBasisCtrl),
-              _numberField('Einkauf Pensionskasse Zusatz', einkaufPkZusatzCtrl),
-              _numberField('Steuern Bund und Kanton ca.', steuernCtrl),
-              const SizedBox(height: 12),
-              Text('Totale Ausgaben: CHF ${totalAusgaben.toStringAsFixed(2)}', style: const TextStyle(fontWeight: FontWeight.w600)),
+            const Divider(height: 24),
+            const Text(
+              'Lebenshaltungskosten pro Jahr',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            _numberField('Krankenkassenprämien', kkCtrl),
+            _numberField('Ferien', ferienCtrl),
+            _numberField('Miete', mieteCtrl),
+            _numberField('Alimente', alimenteCtrl),
+            _numberField('Hypothekarzins Wohnung', hypothekCtrl),
+            _numberField(
+              'Liegenschaft jährlicher Unterhalt + Nebenkosten',
+              unterhaltCtrl,
+            ),
+            _numberField('Säule 3a', sauele3aCtrl),
+            _numberField('Einkauf Pensionskasse basis', einkaufPkBasisCtrl),
+            _numberField('Einkauf Pensionskasse Zusatz', einkaufPkZusatzCtrl),
+            _numberField('Steuern Bund und Kanton ca.', steuernCtrl),
+            const SizedBox(height: 12),
+            Text(
+              'Totale Ausgaben: CHF ${totalAusgaben.toStringAsFixed(2)}',
+              style: const TextStyle(fontWeight: FontWeight.w600),
+            ),
 
-              const Divider(height: 24),
-              Text('Differenz Einnahmen/Ausgaben: CHF ${differenz.toStringAsFixed(2)}', style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+            const Divider(height: 24),
+            Text(
+              'Differenz Einnahmen/Ausgaben: CHF ${differenz.toStringAsFixed(2)}',
+              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            ),
 
-              const Divider(height: 24),
-              const Text('Vorsorgegelder', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-              _numberField('Vorsorgekonto 3a 1', v3a1Ctrl),
-              _numberField('Vorsorgekonto 3a 2', v3a2Ctrl),
-              _numberField('Vorsorgekonto 3a 3', v3a3Ctrl),
-              _numberField('Vorsorgekonto 3a 4', v3a4Ctrl),
-              _numberField('Vorsorgekonto 3a 5', v3a5Ctrl),
-              _numberField('Steuern Bund und Kanton ca. auf Vorsorgekapital', steuerVorsorgeCtrl),
+            const Divider(height: 24),
+            const Text(
+              'Vorsorgegelder',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            _numberField('Vorsorgekonto 3a 1', v3a1Ctrl),
+            _numberField('Vorsorgekonto 3a 2', v3a2Ctrl),
+            _numberField('Vorsorgekonto 3a 3', v3a3Ctrl),
+            _numberField('Vorsorgekonto 3a 4', v3a4Ctrl),
+            _numberField('Vorsorgekonto 3a 5', v3a5Ctrl),
+            _numberField(
+              'Steuern Bund und Kanton ca. auf Vorsorgekapital',
+              steuerVorsorgeCtrl,
+            ),
 
-              const SizedBox(height: 8),
-              Text('Total Vorsorge: CHF ${totalVorsorge.toStringAsFixed(2)}', style: const TextStyle(fontWeight: FontWeight.w600)),
-              Text('Netto Vorsorge (nach Steuern): CHF ${nettoVorsorge.toStringAsFixed(2)}', style: const TextStyle(fontWeight: FontWeight.w600)),
-              Text('Steuerbelastung in % der Auszahlung: ${steuerBelastungPercent.toStringAsFixed(2)} %', style: const TextStyle(fontWeight: FontWeight.w600)),
+            const SizedBox(height: 8),
+            Text(
+              'Total Vorsorge: CHF ${totalVorsorge.toStringAsFixed(2)}',
+              style: const TextStyle(fontWeight: FontWeight.w600),
+            ),
+            Text(
+              'Netto Vorsorge (nach Steuern): CHF ${nettoVorsorge.toStringAsFixed(2)}',
+              style: const TextStyle(fontWeight: FontWeight.w600),
+            ),
+            Text(
+              'Steuerbelastung in % der Auszahlung: ${steuerBelastungPercent.toStringAsFixed(2)} %',
+              style: const TextStyle(fontWeight: FontWeight.w600),
+            ),
 
-              const Divider(height: 24),
-              const Text('Liquiditätsplanung', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-              _numberField('Liquiditätskonto', liquiditaetKontoCtrl),
-              _numberField('Liquidität zu Beginn des Jahres ca.', liquiditaetStartCtrl),
-              _numberField('Kapitalzugänge', kapitalZugaengeCtrl),
-              const SizedBox(height: 8),
-              Text('Liquidität Ende Jahr (ca.): CHF ${liquiditaetEnde.toStringAsFixed(2)}', style: const TextStyle(fontWeight: FontWeight.w600)),
-              Text('Differenz Einnahmen/Ausgaben (Sparquote): CHF ${sparquote.toStringAsFixed(2)}', style: const TextStyle(fontWeight: FontWeight.w600)),
+            const Divider(height: 24),
+            const Text(
+              'Liquiditätsplanung',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            _numberField('Liquiditätskonto', liquiditaetKontoCtrl),
+            _numberField(
+              'Liquidität zu Beginn des Jahres ca.',
+              liquiditaetStartCtrl,
+            ),
+            _numberField('Kapitalzugänge', kapitalZugaengeCtrl),
+            const SizedBox(height: 8),
+            Text(
+              'Liquidität Ende Jahr (ca.): CHF ${liquiditaetEnde.toStringAsFixed(2)}',
+              style: const TextStyle(fontWeight: FontWeight.w600),
+            ),
+            Text(
+              'Differenz Einnahmen/Ausgaben (Sparquote): CHF ${sparquote.toStringAsFixed(2)}',
+              style: const TextStyle(fontWeight: FontWeight.w600),
+            ),
 
-              const SizedBox(height: 18),
-              Row(
-                children: [
-                  ElevatedButton(
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        _calculateAll();
-                        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Berechnungen aktualisiert')));
-                      }
-                    },
-                    child: const Text('Berechnen'),
-                  ),
-                  const SizedBox(width: 12),
-                  ElevatedButton(
-                    onPressed: () {
-                      // Reset to defaults or empty
-                      _resetFields();
-                    },
-                    child: const Text('Zurücksetzen'),
-                    style: ElevatedButton.styleFrom(backgroundColor: Colors.grey),
-                  )
-                ],
-              ),
+            const SizedBox(height: 18),
+            Row(
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    if (_formKey.currentState!.validate()) {
+                      _calculateAll();
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('Berechnungen aktualisiert'),
+                        ),
+                      );
+                    }
+                  },
+                  child: const Text('Berechnen'),
+                ),
+                const SizedBox(width: 12),
+                ElevatedButton(
+                  onPressed: () {
+                    // Reset to defaults or empty
+                    _resetFields();
+                  },
+                  child: const Text('Zurücksetzen'),
+                  style: ElevatedButton.styleFrom(backgroundColor: Colors.grey),
+                ),
+              ],
+            ),
 
-              const SizedBox(height: 40),
-            ],
-          ),
+            const SizedBox(height: 40),
+          ],
         ),
       ),
     );

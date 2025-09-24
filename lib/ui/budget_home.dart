@@ -44,7 +44,7 @@ class _BudgetHomeState extends State<BudgetHome>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Finanzplanung"),
+        title: const Text("Budget Planung"),
         bottom: TabBar(
           labelColor: AppTheme.lightTheme.appBarTheme.foregroundColor,
           unselectedLabelColor: AppTheme.lightTheme.scaffoldBackgroundColor,

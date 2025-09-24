@@ -65,81 +65,90 @@ class _ElearningScreenState extends State<ElearningScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(12),
-      child: Column(
-        children: [
-          // Kopf: Fortschritt + kurzer Text
-          Card(
-            elevation: 3,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  const Text(
-                    'E-Learning Modul',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    'Wähle ein Thema aus und arbeite die Lerninhalte durch. Dein Fortschritt wird angezeigt.',
-                    style: TextStyle(color: Colors.grey.shade700),
-                  ),
-                  const SizedBox(height: 12),
-                  LinearProgressIndicator(value: _progress),
-                  const SizedBox(height: 8),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        '${_completed.length} / ${_topics.length} abgeschlossen',
+    return Scaffold(
+      appBar: AppBar(title: const Text('E-Learning')),
+      body: Padding(
+        padding: const EdgeInsets.all(12),
+        child: Column(
+          children: [
+            // Kopf: Fortschritt + kurzer Text
+            Card(
+              elevation: 3,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 12,
+                  horizontal: 16,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    const Text(
+                      'E-Learning Modul',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
                       ),
-                      Text('${(_progress * 100).round()} %'),
-                    ],
-                  ),
-                ],
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      'Wähle ein Thema aus und arbeite die Lerninhalte durch. Dein Fortschritt wird angezeigt.',
+                      style: TextStyle(color: Colors.grey.shade700),
+                    ),
+                    const SizedBox(height: 12),
+                    LinearProgressIndicator(value: _progress),
+                    const SizedBox(height: 8),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          '${_completed.length} / ${_topics.length} abgeschlossen',
+                        ),
+                        Text('${(_progress * 100).round()} %'),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
 
-          const SizedBox(height: 12),
+            const SizedBox(height: 12),
 
-          // Themenliste
-          Expanded(
-            child: ListView.separated(
-              itemCount: _topics.length,
-              separatorBuilder: (_, __) => const SizedBox(height: 8),
-              itemBuilder: (context, index) {
-                final topic = _topics[index];
-                final done = _completed.contains(topic.id);
-                return Card(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  elevation: 2,
-                  child: ListTile(
-                    leading: CircleAvatar(child: Text(topic.title[0])),
-                    title: Text(topic.title),
-                    subtitle: Text(
-                      // kurze Vorschau
-                      (_topicContent[topic.id] ?? '').split('.').first + '.',
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
+            // Themenliste
+            Expanded(
+              child: ListView.separated(
+                itemCount: _topics.length,
+                separatorBuilder: (_, __) => const SizedBox(height: 8),
+                itemBuilder: (context, index) {
+                  final topic = _topics[index];
+                  final done = _completed.contains(topic.id);
+                  return Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
                     ),
-                    trailing: done
-                        ? const Icon(Icons.check_circle, color: Colors.green)
-                        : const Icon(Icons.chevron_right),
-                    onTap: () => _openTopic(context, topic),
-                  ),
-                );
-              },
+                    elevation: 2,
+                    child: ListTile(
+                      leading: CircleAvatar(child: Text(topic.title[0])),
+                      title: Text(topic.title),
+                      subtitle: Text(
+                        // kurze Vorschau
+                        (_topicContent[topic.id] ?? '').split('.').first + '.',
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      trailing: done
+                          ? const Icon(Icons.check_circle, color: Colors.green)
+                          : const Icon(Icons.chevron_right),
+                      onTap: () => _openTopic(context, topic),
+                    ),
+                  );
+                },
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
