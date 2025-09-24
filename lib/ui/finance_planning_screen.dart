@@ -82,7 +82,7 @@ class _FinancePlanningScreenState extends State<FinancePlanningScreen> {
                           title: Text("${row['year']}"),
                           subtitle: Text(
                             "Einkommen: ${row['income'].toStringAsFixed(2)} CHF\n"
-                            "Mit PK-Einkäufe: ${row['withPension'].toStringAsFixed(2)} CHF\n"
+                            "Mit 3a Einzahlungen: ${row['withPension'].toStringAsFixed(2)} CHF\n"
                             "Steuerersparnis: ${row['savings'].toStringAsFixed(2)} CHF",
                           ),
                         );
