@@ -50,13 +50,33 @@ class _BudgetCalculatorScreenState extends State<BudgetCalculatorScreen> {
         items: [
           BudgetItem(label: "Krankenkasse"),
           BudgetItem(label: "Zusatzversicherungen"),
+          BudgetItem(label: "Medikamente"),
+          BudgetItem(label: "Zahnarzt"),
+          BudgetItem(label: "Therapie"),
         ],
       ),
+      
+BudgetCategory(
+        name: "Telefon & Internet & TV",
+        items: [
+          BudgetItem(label: "Internet, TV, Festnetz, Mobil"),
+          BudgetItem(label: "Billag Gebühren"),
+          BudgetItem(label:   "Streaming Abos (Netflix, Spotify, etc.)"),
+        ],
+      ),
+
       BudgetCategory(
         name: "Freizeit & Kultur",
         items: [
           BudgetItem(label: "Ferien"),
-          BudgetItem(label: "Hobbys, Sport, Kino"),
+          BudgetItem(label: "Hobbys, Sport, Verein, Kino"),
+        ],
+      ),
+       BudgetCategory(
+        name: "Weiterbildung & Zeitungen",
+        items: [
+          BudgetItem(label: "Weitere Bildung"),
+          BudgetItem(label: "Zeitungen, Magazine, Bücher, etc."),
         ],
       ),
       BudgetCategory(
@@ -64,6 +84,27 @@ class _BudgetCalculatorScreenState extends State<BudgetCalculatorScreen> {
         items: [
           BudgetItem(label: "Säule 3a"),
           BudgetItem(label: "Wertschriften / Investments"),
+        ],
+      ),
+      BudgetCategory(
+        name: "Steuern",
+        items: [
+          BudgetItem(label: "Gemeindesteuern"),
+          BudgetItem(label: "Kantonssteuern"),
+          BudgetItem(label: "Bundessteuern"),
+          BudgetItem(label: "Quellensteuern"),
+          BudgetItem(label: "Wehrpflichtersatz"),
+          BudgetItem(label: "Feuerwehrersatzabgabe"),
+          BudgetItem(label: "Kirchensteuern"),
+        ],
+      ),
+      BudgetCategory(
+        name: "Schulden & Kreditkarten",
+        items: [
+          BudgetItem(label: "Schulden"),
+          BudgetItem(label: "Kreditkarten"),
+          BudgetItem(label: "Schuldzinsen"),
+          BudgetItem(label: "Kreditkartengebühren & Zinsen"),
         ],
       ),
     ];
