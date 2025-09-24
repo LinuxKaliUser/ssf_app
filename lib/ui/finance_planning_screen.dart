@@ -48,7 +48,7 @@ class _FinancePlanningScreenState extends State<FinancePlanningScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Finanz- & Steuerplanung")),
+      appBar: AppBar(title: const Text("Steuersimulation mit 3a")),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
