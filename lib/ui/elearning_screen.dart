@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:ssf_app/data/quiz_question.dart';
+import 'package:ssf_app/ui/quiz_screen.dart';
 
 class ElearningScreen extends StatefulWidget {
   const ElearningScreen({Key? key}) : super(key: key);
@@ -17,49 +19,68 @@ class _ElearningScreenState extends State<ElearningScreen> {
     _Topic(id: 'versicherungen', title: 'Versicherungen'),
     _Topic(id: 'immobilien', title: 'Immobilien'),
     _Topic(id: 'dokumenten vorsorge', title: 'Dokumenten Vorsorge'),
+    _Topic(id: 'quiz', title: 'Allgemeines Quiz'),
   ];
 
-  // lokal: welche Themen als erledigt markiert wurden
+  // Track which topics are completed and quiz scores per topic
   final Set<String> _completed = <String>{};
+  final Map<String, int> _quizScores = {};
 
   double get _progress =>
       _topics.isEmpty ? 0.0 : _completed.length / _topics.length;
 
   // Beispielinhalte (kannst du durch Inhalte aus dem Repo ersetzen)
-  static const Map<String, String> _topicContent = {
+  final Map<String, String> _topicContent = {
     'budget':
         'Wie man ein realistisches Monatsbudget erstellt, fixe vs. variable Ausgaben, Notgroschen.',
     'sparen':
-        'Sparstrategien, Sparrate erhÃ¶hen, automatische SparplÃ¤ne, Notfallreserve.',
+        'Sparstrategien, Sparrate erhöhen, automatische Sparpläne, Notfallreserve.',
     'invest':
-        'Grundlagen (Aktien, ETFs, Fonds, Obligationen, Optionen, Bitcoin), Diversifikation, Risiko vs. Rendite, Kosten (TER, GebÃ¼hren).',
+        'Grundlagen (Aktien, ETFs, Fonds, Obligationen, Optionen, Bitcoin), Diversifikation, Risiko vs. Rendite, Kosten (TER, Gebühren).',
     'steuer':
-        'Grundlagen der SteuererklÃ¤rung, AbzÃ¼ge nutzen, Quellensteuer, Steuerplanung fÃ¼r Vorsorge.',
+        'Grundlagen der Steuererklärung, Abzüge nutzen, Quellensteuer, Steuerplanung für Vorsorge.',
     'altersvorsorge':
-        '3-SÃ¤ulen System CH, Pensionskasse, SÃ¤ule 3a / 3b, Renten vs. Kapital, FreizÃ¼gikeitsdepot, AHV.',
+        '3-Säulen System CH, Pensionskasse, Säule 3a / 3b, Renten vs. Kapital, Freizügikeitsdepot, AHV.',
     'versicherungen':
         'Wichtige Versicherungen (Haftpflicht, Hausrat, Rechtsschutz, Reiseversicherung, Autoversicherungen).',
     'immobilien':
         'Hypothekenarten, Nebenkosten, Eigenkapital, Tragbarkeit, direkte oder indirekte Amortisation.',
     'dokumenten vorsorge':
-        'Wichtige Dokumente Testament, Vorsorgeauftrag, PatientenverfÃ¼gung.',
+        'Wichtige Dokumente Testament, Vorsorgeauftrag, Patientenverfügung.',
   };
 
   Future<void> _openTopic(BuildContext context, _Topic topic) async {
-    // ï¿½ffne detailseite; die Seite kann beim Schliessen true zurï¿½ckgeben (markieren als erledigt)
-    final bool? completed = await Navigator.of(context).push<bool>(
+    // Show detail, then quiz, then mark as completed if quiz passed
+    final bool? readDone = await Navigator.of(context).push<bool>(
       MaterialPageRoute(
         builder: (_) => TopicDetailPage(
           title: topic.title,
-          content: _topicContent[topic.id] ?? 'Inhalt nicht verfÃ¼gbar.',
+          content: _topicContent[topic.id] ?? 'Inhalt nicht verfügbar.',
         ),
       ),
     );
-
-    if (completed == true) {
-      setState(() {
-        _completed.add(topic.id);
-      });
+    if (readDone == true) {
+      // After reading, show quiz
+      final quiz = topicQuizzes[topic.id];
+      if (quiz != null) {
+        final int? score = await Navigator.of(context).push<int>(
+          MaterialPageRoute(
+            builder: (_) => QuizScreen(title: topic.title, questions: quiz),
+          ),
+        );
+        if (score != null) {
+          setState(() {
+            _quizScores[topic.id] = score;
+            if (score == quiz.length) {
+              _completed.add(topic.id);
+            }
+          });
+        }
+      } else {
+        setState(() {
+          _completed.add(topic.id);
+        });
+      }
     }
   }
 
@@ -123,7 +144,54 @@ class _ElearningScreenState extends State<ElearningScreen> {
                 separatorBuilder: (_, __) => const SizedBox(height: 8),
                 itemBuilder: (context, index) {
                   final topic = _topics[index];
+                  if (topic.id == 'quiz') {
+                    // Special card for the general quiz module
+                    return Card(
+                      color: Colors.blue.shade50,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      elevation: 2,
+                      child: ListTile(
+                        leading: const Icon(Icons.quiz, color: Colors.blue),
+                        title: Text(
+                          'Allgemeines Quiz',
+                          style: const TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        subtitle: const Text(
+                          'Teste dein Wissen zu allen Modulen!',
+                        ),
+                        trailing: const Icon(Icons.chevron_right),
+                        onTap: () async {
+                          // Combine all quiz questions for a general quiz
+                          final allQuestions = topicQuizzes.values
+                              .expand((q) => q)
+                              .toList();
+                          final int? score = await Navigator.of(context)
+                              .push<int>(
+                                MaterialPageRoute(
+                                  builder: (_) => QuizScreen(
+                                    title: 'Allgemeines Quiz',
+                                    questions: allQuestions,
+                                  ),
+                                ),
+                              );
+                          if (score != null) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                  'Du hast $score von ${allQuestions.length} richtig!',
+                                ),
+                              ),
+                            );
+                          }
+                        },
+                      ),
+                    );
+                  }
                   final done = _completed.contains(topic.id);
+                  final quizScore = _quizScores[topic.id];
+                  final quizTotal = topicQuizzes[topic.id]?.length;
                   return Card(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
@@ -132,11 +200,28 @@ class _ElearningScreenState extends State<ElearningScreen> {
                     child: ListTile(
                       leading: CircleAvatar(child: Text(topic.title[0])),
                       title: Text(topic.title),
-                      subtitle: Text(
-                        // kurze Vorschau
-                        (_topicContent[topic.id] ?? '').split('.').first + '.',
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
+                      subtitle: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            (_topicContent[topic.id] ?? '').split('.').first +
+                                '.',
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          if (quizScore != null && quizTotal != null)
+                            Padding(
+                              padding: const EdgeInsets.only(top: 4),
+                              child: LinearProgressIndicator(
+                                value: quizScore / quizTotal,
+                                minHeight: 6,
+                                backgroundColor: Colors.grey.shade200,
+                                color: quizScore == quizTotal
+                                    ? Colors.green
+                                    : Colors.orange,
+                              ),
+                            ),
+                        ],
                       ),
                       trailing: done
                           ? const Icon(Icons.check_circle, color: Colors.green)
