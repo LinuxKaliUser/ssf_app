@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ssf_app/data/quiz_question.dart';
+import 'package:ssf_app/backend/data/learning_topic.dart';
 import 'package:ssf_app/ui/quiz_screen.dart';
 
 class ElearningScreen extends StatefulWidget {
@@ -10,16 +11,69 @@ class ElearningScreen extends StatefulWidget {
 }
 
 class _ElearningScreenState extends State<ElearningScreen> {
-  final List<_Topic> _topics = const [
-    _Topic(id: 'budget', title: 'Budget-Grundlage'),
-    _Topic(id: 'sparen', title: 'Intelligentes Sparen'),
-    _Topic(id: 'invest', title: 'Investitions-Grundlagen'),
-    _Topic(id: 'steuer', title: 'Steuerplanung'),
-    _Topic(id: 'altersvorsorge', title: 'Altersvorsorge'),
-    _Topic(id: 'versicherungen', title: 'Versicherungen'),
-    _Topic(id: 'immobilien', title: 'Immobilien'),
-    _Topic(id: 'dokumenten vorsorge', title: 'Dokumenten Vorsorge'),
-    _Topic(id: 'quiz', title: 'Allgemeines Quiz'),
+  final List<LearningTopic> _topics = [
+    LearningTopic(
+      id: 'budget',
+      title: 'Budget-Grundlage',
+      content:
+          'Wie man ein realistisches Monatsbudget erstellt, fixe vs. variable Ausgaben, Notgroschen.',
+      quizQuestions: topicQuizzes['budget'] ?? [],
+    ),
+    LearningTopic(
+      id: 'sparen',
+      title: 'Intelligentes Sparen',
+      content:
+          'Sparstrategien, Sparrate erhöhen, automatische Sparpläne, Notfallreserve.',
+      quizQuestions: topicQuizzes['sparen'] ?? [],
+    ),
+    LearningTopic(
+      id: 'invest',
+      title: 'Investitions-Grundlagen',
+      content:
+          'Grundlagen (Aktien, ETFs, Fonds, Obligationen, Optionen, Bitcoin), Diversifikation, Risiko vs. Rendite, Kosten (TER, Gebühren).',
+      quizQuestions: topicQuizzes['invest'] ?? [],
+    ),
+    LearningTopic(
+      id: 'steuer',
+      title: 'Steuerplanung',
+      content:
+          'Grundlagen der Steuererklärung, Abzüge nutzen, Quellensteuer, Steuerplanung für Vorsorge.',
+      quizQuestions: topicQuizzes['steuer'] ?? [],
+    ),
+    LearningTopic(
+      id: 'altersvorsorge',
+      title: 'Altersvorsorge',
+      content:
+          '3-Säulen System CH, Pensionskasse, Säule 3a / 3b, Renten vs. Kapital, Freizügikeitsdepot, AHV.',
+      quizQuestions: topicQuizzes['altersvorsorge'] ?? [],
+    ),
+    LearningTopic(
+      id: 'versicherungen',
+      title: 'Versicherungen',
+      content:
+          'Wichtige Versicherungen (Haftpflicht, Hausrat, Rechtsschutz, Reiseversicherung, Autoversicherungen).',
+      quizQuestions: topicQuizzes['versicherungen'] ?? [],
+    ),
+    LearningTopic(
+      id: 'immobilien',
+      title: 'Immobilien',
+      content:
+          'Hypothekenarten, Nebenkosten, Eigenkapital, Tragbarkeit, direkte oder indirekte Amortisation.',
+      quizQuestions: topicQuizzes['immobilien'] ?? [],
+    ),
+    LearningTopic(
+      id: 'dokumenten vorsorge',
+      title: 'Dokumenten Vorsorge',
+      content:
+          'Wichtige Dokumente Testament, Vorsorgeauftrag, Patientenverfügung.',
+      quizQuestions: topicQuizzes['dokumenten vorsorge'] ?? [],
+    ),
+    LearningTopic(
+      id: 'quiz',
+      title: 'Allgemeines Quiz',
+      content: '',
+      quizQuestions: topicQuizzes.values.expand((q) => q).toList(),
+    ),
   ];
 
   // Track which topics are completed and quiz scores per topic
@@ -29,33 +83,13 @@ class _ElearningScreenState extends State<ElearningScreen> {
   double get _progress =>
       _topics.isEmpty ? 0.0 : _completed.length / _topics.length;
 
-  // Beispielinhalte (kannst du durch Inhalte aus dem Repo ersetzen)
-  final Map<String, String> _topicContent = {
-    'budget':
-        'Wie man ein realistisches Monatsbudget erstellt, fixe vs. variable Ausgaben, Notgroschen.',
-    'sparen':
-        'Sparstrategien, Sparrate erhöhen, automatische Sparpläne, Notfallreserve.',
-    'invest':
-        'Grundlagen (Aktien, ETFs, Fonds, Obligationen, Optionen, Bitcoin), Diversifikation, Risiko vs. Rendite, Kosten (TER, Gebühren).',
-    'steuer':
-        'Grundlagen der Steuererklärung, Abzüge nutzen, Quellensteuer, Steuerplanung für Vorsorge.',
-    'altersvorsorge':
-        '3-Säulen System CH, Pensionskasse, Säule 3a / 3b, Renten vs. Kapital, Freizügikeitsdepot, AHV.',
-    'versicherungen':
-        'Wichtige Versicherungen (Haftpflicht, Hausrat, Rechtsschutz, Reiseversicherung, Autoversicherungen).',
-    'immobilien':
-        'Hypothekenarten, Nebenkosten, Eigenkapital, Tragbarkeit, direkte oder indirekte Amortisation.',
-    'dokumenten vorsorge':
-        'Wichtige Dokumente Testament, Vorsorgeauftrag, Patientenverfügung.',
-  };
-
-  Future<void> _openTopic(BuildContext context, _Topic topic) async {
+  Future<void> _openTopic(BuildContext context, LearningTopic topic) async {
     // Show detail, then quiz, then mark as completed if quiz passed
     final bool? readDone = await Navigator.of(context).push<bool>(
       MaterialPageRoute(
         builder: (_) => TopicDetailPage(
           title: topic.title,
-          content: _topicContent[topic.id] ?? 'Inhalt nicht verfügbar.',
+          content: topic.content,
         ),
       ),
     );
@@ -191,7 +225,7 @@ class _ElearningScreenState extends State<ElearningScreen> {
                   }
                   final done = _completed.contains(topic.id);
                   final quizScore = _quizScores[topic.id];
-                  final quizTotal = topicQuizzes[topic.id]?.length;
+                  final quizTotal = topic.quizQuestions.length;
                   return Card(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
@@ -204,12 +238,11 @@ class _ElearningScreenState extends State<ElearningScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            (_topicContent[topic.id] ?? '').split('.').first +
-                                '.',
+                            topic.content.split('.').first + '.',
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                           ),
-                          if (quizScore != null && quizTotal != null)
+                          if (quizScore != null && quizTotal > 0)
                             Padding(
                               padding: const EdgeInsets.only(top: 4),
                               child: LinearProgressIndicator(
@@ -226,7 +259,48 @@ class _ElearningScreenState extends State<ElearningScreen> {
                       trailing: done
                           ? const Icon(Icons.check_circle, color: Colors.green)
                           : const Icon(Icons.chevron_right),
-                      onTap: () => _openTopic(context, topic),
+                      onTap: () async {
+                        // Show detail, then quiz, then mark as completed if quiz passed
+                        await showDialog(
+                          context: context,
+                          builder: (_) => AlertDialog(
+                            title: Text(topic.title),
+                            content: SingleChildScrollView(
+                              child: Text(topic.content),
+                            ),
+                            actions: [
+                              if (quizTotal > 0)
+                                TextButton(
+                                  child: const Text('Quiz starten'),
+                                  onPressed: () async {
+                                    Navigator.of(context).pop();
+                                    final int? score =
+                                        await Navigator.of(context).push<int>(
+                                          MaterialPageRoute(
+                                            builder: (_) => QuizScreen(
+                                              title: topic.title,
+                                              questions: topic.quizQuestions,
+                                            ),
+                                          ),
+                                        );
+                                    if (score != null) {
+                                      setState(() {
+                                        _quizScores[topic.id] = score;
+                                        if (score == quizTotal) {
+                                          _completed.add(topic.id);
+                                        }
+                                      });
+                                    }
+                                  },
+                                ),
+                              TextButton(
+                                child: const Text('Schließen'),
+                                onPressed: () => Navigator.of(context).pop(),
+                              ),
+                            ],
+                          ),
+                        );
+                      },
                     ),
                   );
                 },
@@ -237,12 +311,6 @@ class _ElearningScreenState extends State<ElearningScreen> {
       ),
     );
   }
-}
-
-class _Topic {
-  final String id;
-  final String title;
-  const _Topic({required this.id, required this.title});
 }
 
 class TopicDetailPage extends StatelessWidget {
