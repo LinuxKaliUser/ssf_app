@@ -16,35 +16,35 @@ class _ElearningScreenState extends State<ElearningScreen> {
       id: 'budget',
       title: 'Budget-Grundlage',
       content:
-          'Wie man ein realistisches Monatsbudget erstellt, fixe vs. variable Ausgaben, Notgroschen.',
+          'Wie man ein realistisches Monatsbudget erstellt, Rolling Budget, fixe vs. variable Ausgaben, Notgroschen.',
       quizQuestions: topicQuizzes['budget'] ?? [],
     ),
     LearningTopic(
       id: 'sparen',
       title: 'Intelligentes Sparen',
       content:
-          'Sparstrategien, Sparrate erhöhen, automatische Sparpläne, Notfallreserve.',
+          'Sparstrategien, Sparrate erhÃ¶hen, automatische SparplÃ¤ne, Notfallreserve.',
       quizQuestions: topicQuizzes['sparen'] ?? [],
     ),
     LearningTopic(
       id: 'invest',
       title: 'Investitions-Grundlagen',
       content:
-          'Grundlagen (Aktien, ETFs, Fonds, Obligationen, Optionen, Bitcoin), Diversifikation, Risiko vs. Rendite, Kosten (TER, Gebühren).',
+          'Grundlagen (Aktien, ETFs, Fonds, Obligationen, Optionen, Bitcoin), Diversifikation, Risiko vs. Rendite, Kosten (TER, GebÃ¼hren).',
       quizQuestions: topicQuizzes['invest'] ?? [],
     ),
     LearningTopic(
       id: 'steuer',
       title: 'Steuerplanung',
       content:
-          'Grundlagen der Steuererklärung, Abzüge nutzen, Quellensteuer, Steuerplanung für Vorsorge.',
+          'Grundlagen der SteuererklÃ¤rung, AbzÃ¼ge nutzen, Quellensteuer, Steuerplanung fÃ¼r Vorsorge.',
       quizQuestions: topicQuizzes['steuer'] ?? [],
     ),
     LearningTopic(
       id: 'altersvorsorge',
       title: 'Altersvorsorge',
       content:
-          '3-Säulen System CH, Pensionskasse, Säule 3a / 3b, Renten vs. Kapital, Freizügikeitsdepot, AHV.',
+          '3-SÃ¤ulen System CH, Pensionskasse, SÃ¤ule 3a / 3b, Renten vs. Kapital, FreizÃ¼gikeitsdepot, AHV.',
       quizQuestions: topicQuizzes['altersvorsorge'] ?? [],
     ),
     LearningTopic(
@@ -58,14 +58,14 @@ class _ElearningScreenState extends State<ElearningScreen> {
       id: 'immobilien',
       title: 'Immobilien',
       content:
-          'Hypothekenarten, Nebenkosten, Eigenkapital, Tragbarkeit, direkte oder indirekte Amortisation.',
+          'Hypothekenarten, Nebenkosten, hartes und weiches Eigenkapital, Tragbarkeit, direkte oder indirekte Amortisation.',
       quizQuestions: topicQuizzes['immobilien'] ?? [],
     ),
     LearningTopic(
       id: 'dokumenten vorsorge',
       title: 'Dokumenten Vorsorge',
       content:
-          'Wichtige Dokumente Testament, Vorsorgeauftrag, Patientenverfügung.',
+          'Wichtige Dokumente Testament, Vorsorgeauftrag, PatientenverfÃ¼gung.',
       quizQuestions: topicQuizzes['dokumenten vorsorge'] ?? [],
     ),
     LearningTopic(
@@ -294,7 +294,7 @@ class _ElearningScreenState extends State<ElearningScreen> {
                                   },
                                 ),
                               TextButton(
-                                child: const Text('Schließen'),
+                                child: const Text('Schlieï¿½en'),
                                 onPressed: () => Navigator.of(context).pop(),
                               ),
                             ],

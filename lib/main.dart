@@ -25,7 +25,7 @@ class _FinanceAppState extends State<FinanceApp> {
 
   final List<Widget> _screens = [
     OverviewScreen(),
-    const BudgetHome(),
+    const BudgetHome()
     const FinancePlanningScreen(),
     const ElearningScreen(),
     const AccountScreen(),
@@ -60,7 +60,7 @@ class _FinanceAppState extends State<FinanceApp> {
             BottomNavigationBarItem(
               backgroundColor: AppTheme.lightTheme.appBarTheme.backgroundColor,
               icon: Icon(Icons.dashboard),
-              label: "�bersicht",
+              label: "Übersicht",
             ),
             BottomNavigationBarItem(
               backgroundColor: AppTheme.lightTheme.appBarTheme.backgroundColor,

@@ -146,7 +146,7 @@ class _AccountScreenState extends State<AccountScreen> {
           ),
           TextButton(
             onPressed: () => setState(() => _showRegister = false),
-            child: const Text('Zurück zum Login'),
+            child: const Text('ZurÃ¼ck zum Login'),
           ),
         ],
       ),
