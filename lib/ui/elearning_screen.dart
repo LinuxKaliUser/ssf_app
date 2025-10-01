@@ -294,7 +294,7 @@ class _ElearningScreenState extends State<ElearningScreen> {
                                   },
                                 ),
                               TextButton(
-                                child: const Text('Schlie�en'),
+                                child: const Text('Schliessen'),
                                 onPressed: () => Navigator.of(context).pop(),
                               ),
                             ],
