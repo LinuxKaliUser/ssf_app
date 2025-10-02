@@ -1,6 +1,3 @@
-    public java.util.Optional<Account> findByUsername(String username) {
-        return accountRepository.findByUsername(username);
-    }
 package com.ssf.backend.account;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,5 +45,8 @@ public class AccountService {
 
     public Optional<Account> findById(Long id) {
         return accountRepository.findById(id);
+    }
+    public java.util.Optional<Account> findByUsername(String username) {
+        return accountRepository.findByUsername(username);
     }
 }

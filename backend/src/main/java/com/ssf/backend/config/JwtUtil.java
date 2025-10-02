@@ -33,6 +33,6 @@ public class JwtUtil {
     }
 
     private static Claims getClaims(String token) {
-        return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
+        return Jwts.parser().setSigningKey(key).build().parseClaimsJws(token).getBody();
     }
 }
