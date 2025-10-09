@@ -1,40 +1,62 @@
 import '../data/account_model.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
-/// Service for managing accounts. Forces registration before login.
+/// Service for managing accounts via backend API.
 class AccountService {
-  final List<Account> _accounts = [];
   Account? _currentUser;
+  String? _token;
 
-  /// Register a new user. Throws if username exists or invalid.
-  void register(String email, String username, String password) {
-    if (username.isEmpty || password.isEmpty) {
-      throw Exception('Benutzername und Passwort dürfen nicht leer sein');
-    }
-    if (_accounts.any((a) => a.username == username)) {
-      throw Exception('Benutzername existiert bereits');
-    }
-    if (!RegExp(
-      r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
-    ).hasMatch(email)) {
-      throw Exception('Ungültige E-Mail-Adresse');
-    }
-    _accounts.add(
-      Account(email: email, username: username, password: password),
+  /// Register a new user via backend API. Throws on error.
+  Future<void> register(String email, String username, String password) async {
+    final response = await http.post(
+      Uri.parse('http://localhost:8080/api/accounts/register'),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({
+        'email': email,
+        'username': username,
+        'password': password,
+      }),
     );
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+      _currentUser = Account(
+        email: data['email'] ?? '',
+        username: data['username'] ?? '',
+        password: '', // Do not store password
+      );
+    } else {
+      final error = _parseError(response.body);
+      throw Exception(error);
+    }
   }
 
-  /// Login with username and password. Throws if not registered or wrong password.
-  void login(String username, String password) {
-    final user = _accounts.firstWhere(
-      (a) => a.username == username && a.password == password,
-      orElse: () => throw Exception('Falscher Benutzername oder Passwort'),
+  /// Login with username and password via backend API. Throws on error.
+  Future<void> login(String username, String password) async {
+    final response = await http.post(
+      Uri.parse('http://localhost:8080/api/accounts/login'),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({'username': username, 'password': password}),
     );
-    _currentUser = user;
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+      _token = data['token'];
+      final user = data['user'];
+      _currentUser = Account(
+        email: user['email'] ?? '',
+        username: user['username'] ?? '',
+        password: '',
+      );
+    } else {
+      final error = _parseError(response.body);
+      throw Exception(error);
+    }
   }
 
-  /// Logout current user.
+  /// Logout current user (client-side only).
   void logout() {
     _currentUser = null;
+    _token = null;
   }
 
   /// Returns the currently logged in user, or null.
@@ -42,4 +64,19 @@ class AccountService {
 
   /// Returns true if a user is logged in.
   bool get isLoggedIn => _currentUser != null;
+
+  /// Returns the JWT token if logged in.
+  String? get token => _token;
+
+  String _parseError(String body) {
+    try {
+      final data = jsonDecode(body);
+      if (data is Map && data.containsKey('error')) {
+        return data['error'].toString();
+      }
+      return body;
+    } catch (_) {
+      return body;
+    }
+  }
 }

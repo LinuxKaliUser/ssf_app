@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+
 import '../domain/account_service.dart';
 
 class AccountScreen extends StatefulWidget {
-  const AccountScreen({Key? key}) : super(key: key);
+  final Widget? child;
+  const AccountScreen({Key? key, this.child}) : super(key: key);
 
   @override
   State<AccountScreen> createState() => _AccountScreenState();
@@ -18,12 +20,12 @@ class _AccountScreenState extends State<AccountScreen> {
   String? _error;
   bool _showRegister = false;
 
-  void _login() {
+  void _login() async{
     setState(() {
       _error = null;
     });
     try {
-      _service.login(_userCtrl.text, _passCtrl.text);
+      await _service.login(_userCtrl.text, _passCtrl.text);
       setState(() {});
     } catch (e) {
       setState(() {
@@ -37,12 +39,12 @@ class _AccountScreenState extends State<AccountScreen> {
     setState(() {});
   }
 
-  void _register() {
+  void _register() async {
     setState(() {
       _error = null;
     });
     try {
-      _service.register(
+      await _service.register(
         _regEmailCtrl.text,
         _regUserCtrl.text,
         _regPassCtrl.text,
@@ -62,14 +64,14 @@ class _AccountScreenState extends State<AccountScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Konto')),
-      body: Center(
-        child: _service.isLoggedIn
-            ? _buildProfile()
-            : (_showRegister ? _buildRegister() : _buildLogin()),
-      ),
-    );
+    if (!_service.isLoggedIn) {
+      return Scaffold(
+        appBar: AppBar(title: const Text('Konto')),
+        body: Center(child: _showRegister ? _buildRegister() : _buildLogin()),
+      );
+    }
+    // If a child widget is provided, show it as the main app content after login
+    return widget.child ?? _buildProfile();
   }
 
   Widget _buildLogin() {

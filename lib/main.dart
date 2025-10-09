@@ -1,4 +1,5 @@
 import 'package:ssf_app/ui/account_screen.dart';
+import 'package:ssf_app/domain/account_service.dart';
 import 'package:ssf_app/ui/overview_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:ssf_app/app_theme.dart';
@@ -22,6 +23,7 @@ class FinanceApp extends StatefulWidget {
 
 class _FinanceAppState extends State<FinanceApp> {
   int _selectedIndex = 0;
+  final AccountService _accountService = AccountService();
 
   final List<Widget> _screens = [
     OverviewScreen(),
@@ -50,41 +52,49 @@ class _FinanceAppState extends State<FinanceApp> {
     return MaterialApp(
       title: 'Swiss Finance App',
       theme: AppTheme.lightTheme,
-      home: Scaffold(
-        body: _screens[_selectedIndex],
-        bottomNavigationBar: BottomNavigationBar(
-          backgroundColor: AppTheme.lightTheme.appBarTheme.backgroundColor,
-          currentIndex: _selectedIndex,
-          onTap: _onItemTapped,
-          items: [
-            BottomNavigationBarItem(
-              backgroundColor: AppTheme.lightTheme.appBarTheme.backgroundColor,
-              icon: Icon(Icons.dashboard),
-              label: "Übersicht",
-            ),
-            BottomNavigationBarItem(
-              backgroundColor: AppTheme.lightTheme.appBarTheme.backgroundColor,
-              icon: Icon(Icons.calculate),
-              label: "Budget",
-            ),
-            BottomNavigationBarItem(
-              backgroundColor: AppTheme.lightTheme.appBarTheme.backgroundColor,
-              icon: Icon(Icons.assessment),
-              label: "Planung",
-            ),
-            BottomNavigationBarItem(
-              backgroundColor: AppTheme.lightTheme.appBarTheme.backgroundColor,
-              icon: Icon(Icons.school),
-              label: "E-Learning",
-            ),
-            BottomNavigationBarItem(
-              backgroundColor: AppTheme.lightTheme.appBarTheme.backgroundColor,
-              icon: Icon(Icons.account_circle),
-              label: "Konto",
-            ),
-          ],
-        ),
-      ),
+      home: _accountService.isLoggedIn
+          ? Scaffold(
+              body: _screens[_selectedIndex],
+              bottomNavigationBar: BottomNavigationBar(
+                backgroundColor:
+                    AppTheme.lightTheme.appBarTheme.backgroundColor,
+                currentIndex: _selectedIndex,
+                onTap: _onItemTapped,
+                items: [
+                  BottomNavigationBarItem(
+                    backgroundColor:
+                        AppTheme.lightTheme.appBarTheme.backgroundColor,
+                    icon: Icon(Icons.dashboard),
+                    label: "Übersicht",
+                  ),
+                  BottomNavigationBarItem(
+                    backgroundColor:
+                        AppTheme.lightTheme.appBarTheme.backgroundColor,
+                    icon: Icon(Icons.calculate),
+                    label: "Budget",
+                  ),
+                  BottomNavigationBarItem(
+                    backgroundColor:
+                        AppTheme.lightTheme.appBarTheme.backgroundColor,
+                    icon: Icon(Icons.assessment),
+                    label: "Planung",
+                  ),
+                  BottomNavigationBarItem(
+                    backgroundColor:
+                        AppTheme.lightTheme.appBarTheme.backgroundColor,
+                    icon: Icon(Icons.school),
+                    label: "E-Learning",
+                  ),
+                  BottomNavigationBarItem(
+                    backgroundColor:
+                        AppTheme.lightTheme.appBarTheme.backgroundColor,
+                    icon: Icon(Icons.account_circle),
+                    label: "Konto",
+                  ),
+                ],
+              ),
+            )
+          : const AccountScreen(),
     );
   }
 }
