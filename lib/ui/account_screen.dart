@@ -44,6 +44,7 @@ class _AccountScreenState extends State<AccountScreen> {
       _error = null;
     });
     try {
+      print("registe beginss service");
       await _service.register(
         _regEmailCtrl.text,
         _regUserCtrl.text,
@@ -101,7 +102,7 @@ class _AccountScreenState extends State<AccountScreen> {
             Text(_error!, style: const TextStyle(color: Colors.red)),
           ],
           const SizedBox(height: 20),
-          ElevatedButton(onPressed: _login, child: const Text('Login')),
+          ElevatedButton(onPressed:()async=>_login(), child: const Text('Login')),
           TextButton(
             onPressed: () => setState(() => _showRegister = true),
             child: const Text('Noch kein Konto? Jetzt registrieren'),
@@ -143,7 +144,7 @@ class _AccountScreenState extends State<AccountScreen> {
           ],
           const SizedBox(height: 20),
           ElevatedButton(
-            onPressed: _register,
+            onPressed:()async=> _register(),
             child: const Text('Registrieren'),
           ),
           TextButton(

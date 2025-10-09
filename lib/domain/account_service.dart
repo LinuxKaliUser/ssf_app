@@ -9,6 +9,8 @@ class AccountService {
 
   /// Register a new user via backend API. Throws on error.
   Future<void> register(String email, String username, String password) async {
+    print("registe before post service");
+
     final response = await http.post(
       Uri.parse('http://localhost:8080/api/accounts/register'),
       headers: {'Content-Type': 'application/json'},
@@ -18,6 +20,8 @@ class AccountService {
         'password': password,
       }),
     );
+    print("registe post service");
+
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
       _currentUser = Account(
