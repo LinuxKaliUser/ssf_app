@@ -4,7 +4,7 @@ import '../domain/account_service.dart';
 
 class AccountScreen extends StatefulWidget {
   final Widget? child;
-  const AccountScreen({Key? key, this.child}) : super(key: key);
+  const AccountScreen({super.key, required this.child});
 
   @override
   State<AccountScreen> createState() => _AccountScreenState();
@@ -20,7 +20,7 @@ class _AccountScreenState extends State<AccountScreen> {
   String? _error;
   bool _showRegister = false;
 
-  void _login() async{
+  void _login() async {
     setState(() {
       _error = null;
     });
@@ -102,7 +102,10 @@ class _AccountScreenState extends State<AccountScreen> {
             Text(_error!, style: const TextStyle(color: Colors.red)),
           ],
           const SizedBox(height: 20),
-          ElevatedButton(onPressed:()async=>_login(), child: const Text('Login')),
+          ElevatedButton(
+            onPressed: () async => _login(),
+            child: const Text('Login'),
+          ),
           TextButton(
             onPressed: () => setState(() => _showRegister = true),
             child: const Text('Noch kein Konto? Jetzt registrieren'),
@@ -144,7 +147,7 @@ class _AccountScreenState extends State<AccountScreen> {
           ],
           const SizedBox(height: 20),
           ElevatedButton(
-            onPressed:()async=> _register(),
+            onPressed: () async => _register(),
             child: const Text('Registrieren'),
           ),
           TextButton(
