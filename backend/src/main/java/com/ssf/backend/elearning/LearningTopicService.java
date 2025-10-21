@@ -22,6 +22,11 @@ public class LearningTopicService {
         return learningTopicRepository.findById(id);
     }
 
+    public Optional<LearningTopic> findByTopicId(String topicId) {
+        LearningTopic topic = learningTopicRepository.findByTopicId(topicId);
+        return topic != null ? Optional.of(topic) : Optional.empty();
+    }
+
     public LearningTopic save(LearningTopic topic) {
         return learningTopicRepository.save(topic);
     }

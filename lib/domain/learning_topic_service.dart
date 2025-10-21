@@ -1,25 +1,28 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:ssf_app/backend/data/learning_topic.dart';
+import 'package:ssf_app/data/learning_topic.dart';
 
 class LearningTopicService {
   // Update baseUrl to your backend (use 10.0.2.2 for Android emulator)
   final String baseUrl;
 
   LearningTopicService({String? baseUrl})
-      : baseUrl = baseUrl ?? 'http://localhost:8080';
+    : baseUrl = baseUrl ?? 'http://localhost:8080';
 
   Uri _topicsUri() => Uri.parse('$baseUrl/api/elearning/topics');
 
   /// Fetch all learning topics from backend.
   /// Throws an exception on non-200 responses.
   Future<List<LearningTopic>> fetchAllTopics() async {
-    final resp = await http.get(_topicsUri(), headers: {
-      'Accept': 'application/json',
-    });
+    final resp = await http.get(
+      _topicsUri(),
+      headers: {'Accept': 'application/json'},
+    );
 
     if (resp.statusCode != 200) {
-      throw Exception('Failed to load topics: ${resp.statusCode} ${resp.reasonPhrase}');
+      throw Exception(
+        'Failed to load topics: ${resp.statusCode} ${resp.reasonPhrase}',
+      );
     }
 
     final List<dynamic> data = jsonDecode(resp.body) as List<dynamic>;

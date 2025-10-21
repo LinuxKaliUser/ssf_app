@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:ssf_app/data/quiz_question.dart';
 import 'package:ssf_app/data/learning_topic.dart';
+import 'package:ssf_app/data/quiz_question.dart';
 import 'package:ssf_app/domain/learning_topic_service.dart';
 import 'package:ssf_app/ui/quiz_screen.dart';
 
@@ -12,92 +12,137 @@ class ElearningScreen extends StatefulWidget {
 }
 
 class _ElearningScreenState extends State<ElearningScreen> {
-  // final List<LearningTopic> _topics = [
-  //   LearningTopic(
-  //     id: 'budget',
-  //     title: 'Budget-Grundlage',
-  //     content:
-  //         'Wie man ein realistisches Monatsbudget erstellt, Rolling Budget, fixe vs. variable Ausgaben, Notgroschen.',
-  //     quizQuestions: topicQuizzes['budget'] ?? [],
-  //   ),
-  //   LearningTopic(
-  //     id: 'sparen',
-  //     title: 'Intelligentes Sparen',
-  //     content:
-  //         'Sparstrategien, Sparrate erhöhen, automatische Sparpläne, Notfallreserve.',
-  //     quizQuestions: topicQuizzes['sparen'] ?? [],
-  //   ),
-  //   LearningTopic(
-  //     id: 'invest',
-  //     title: 'Investitions-Grundlagen',
-  //     content:
-  //         'Grundlagen (Aktien, ETFs, Fonds, Obligationen, Optionen, Bitcoin), Diversifikation, Risiko vs. Rendite, Kosten (TER, Gebühren).',
-  //     quizQuestions: topicQuizzes['invest'] ?? [],
-  //   ),
-  //   LearningTopic(
-  //     id: 'steuer',
-  //     title: 'Steuerplanung',
-  //     content:
-  //         'Grundlagen der Steuererklärung, Abzüge nutzen, Quellensteuer, Steuerplanung für Vorsorge.',
-  //     quizQuestions: topicQuizzes['steuer'] ?? [],
-  //   ),
-  //   LearningTopic(
-  //     id: 'altersvorsorge',
-  //     title: 'Altersvorsorge',
-  //     content:
-  //         '3-Säulen System CH, Pensionskasse, Säule 3a / 3b, Renten vs. Kapital, Freizügikeitsdepot, AHV.',
-  //     quizQuestions: topicQuizzes['altersvorsorge'] ?? [],
-  //   ),
-  //   LearningTopic(
-  //     id: 'versicherungen',
-  //     title: 'Versicherungen',
-  //     content:
-  //         'Wichtige Versicherungen (Haftpflicht, Hausrat, Rechtsschutz, Reiseversicherung, Autoversicherungen).',
-  //     quizQuestions: topicQuizzes['versicherungen'] ?? [],
-  //   ),
-  //   LearningTopic(
-  //     id: 'immobilien',
-  //     title: 'Immobilien',
-  //     content:
-  //         'Hypothekenarten, Nebenkosten, hartes und weiches Eigenkapital, Tragbarkeit, direkte oder indirekte Amortisation.',
-  //     quizQuestions: topicQuizzes['immobilien'] ?? [],
-  //   ),
-  //   LearningTopic(
-  //     id: 'dokumenten vorsorge',
-  //     title: 'Dokumenten Vorsorge',
-  //     content:
-  //         'Wichtige Dokumente Testament, Vorsorgeauftrag, Patientenverfügung.',
-  //     quizQuestions: topicQuizzes['dokumenten vorsorge'] ?? [],
-  //   ),
-  //   LearningTopic(
-  //     id: 'quiz',
-  //     title: 'Allgemeines Quiz',
-  //     content: '',
-  //     quizQuestions: topicQuizzes.values.expand((q) => q).toList(),
-  //   ),
-  // ];
+  late final topicQuizzes = {
+    'budget': [
+      QuizQuestion(
+        question: 'Was ist ein Notgroschen?',
+        answers: [
+          'Ein Sparkonto f�r Notf�lle',
+          'Ein teures Hobby',
+          'Eine Steuerart',
+        ],
+        correctIndex: 0,
+      ),
+      QuizQuestion(
+        question: 'Was z�hlt zu fixen Ausgaben?',
+        answers: ['Miete', 'Kino', 'Restaurant'],
+        correctIndex: 0,
+      ),
+    ],
+    'sparen': [
+      QuizQuestion(
+        question: 'Wie kann man die Sparrate erh�hen?',
+        answers: [
+          'Automatische �berweisung',
+          'Mehr ausgeben',
+          'Weniger arbeiten',
+        ],
+        correctIndex: 0,
+      ),
+    ],
+    'invest': [
+      QuizQuestion(
+        question: 'Was ist Diversifikation?',
+        answers: [
+          'Verteilung auf verschiedene Anlagen',
+          'Alles in eine Aktie',
+          'Nur Bargeld halten',
+        ],
+        correctIndex: 0,
+      ),
+    ],
+    // ... weitere Quizfragen f�r andere Themen
+  };
+  late final List<LearningTopic> _topics = [
+    LearningTopic(
+      id: 'budget',
+      title: 'Budget-Grundlage',
+      content:
+          'Wie man ein realistisches Monatsbudget erstellt, Rolling Budget, fixe vs. variable Ausgaben, Notgroschen.',
+      quizQuestions: topicQuizzes['budget'] ?? [],
+    ),
+    LearningTopic(
+      id: 'sparen',
+      title: 'Intelligentes Sparen',
+      content:
+          'Sparstrategien, Sparrate erhöhen, automatische Sparpläne, Notfallreserve.',
+      quizQuestions: topicQuizzes['sparen'] ?? [],
+    ),
+    LearningTopic(
+      id: 'invest',
+      title: 'Investitions-Grundlagen',
+      content:
+          'Grundlagen (Aktien, ETFs, Fonds, Obligationen, Optionen, Bitcoin), Diversifikation, Risiko vs. Rendite, Kosten (TER, Gebühren).',
+      quizQuestions: topicQuizzes['invest'] ?? [],
+    ),
+    LearningTopic(
+      id: 'steuer',
+      title: 'Steuerplanung',
+      content:
+          'Grundlagen der Steuererklärung, Abzüge nutzen, Quellensteuer, Steuerplanung für Vorsorge.',
+      quizQuestions: topicQuizzes['steuer'] ?? [],
+    ),
+    LearningTopic(
+      id: 'altersvorsorge',
+      title: 'Altersvorsorge',
+      content:
+          '3-Säulen System CH, Pensionskasse, Säule 3a / 3b, Renten vs. Kapital, Freizügikeitsdepot, AHV.',
+      quizQuestions: topicQuizzes['altersvorsorge'] ?? [],
+    ),
+    LearningTopic(
+      id: 'versicherungen',
+      title: 'Versicherungen',
+      content:
+          'Wichtige Versicherungen (Haftpflicht, Hausrat, Rechtsschutz, Reiseversicherung, Autoversicherungen).',
+      quizQuestions: topicQuizzes['versicherungen'] ?? [],
+    ),
+    LearningTopic(
+      id: 'immobilien',
+      title: 'Immobilien',
+      content:
+          'Hypothekenarten, Nebenkosten, hartes und weiches Eigenkapital, Tragbarkeit, direkte oder indirekte Amortisation.',
+      quizQuestions: topicQuizzes['immobilien'] ?? [],
+    ),
+    LearningTopic(
+      id: 'dokumenten vorsorge',
+      title: 'Dokumenten Vorsorge',
+      content:
+          'Wichtige Dokumente Testament, Vorsorgeauftrag, Patientenverfügung.',
+      quizQuestions: topicQuizzes['dokumenten vorsorge'] ?? [],
+    ),
+    LearningTopic(
+      id: 'quiz',
+      title: 'Allgemeines Quiz',
+      content: '',
+      quizQuestions: topicQuizzes.values.expand((q) => q).toList(),
+    ),
+  ];
 
+  // inside _ElearningScreenState
+  final _topicService = LearningTopicService(baseUrl: 'http://10.0.2.2:8080');
 
-// inside _ElearningScreenState
-final _topicService = LearningTopicService(baseUrl: 'http://10.0.2.2:8080');
-
-@override
-void initState() {
-  super.initState();
-  _loadTopics();
-}
-
-Future<void> _loadTopics() async {
-  try {
-    final topics = await _topicService.fetchAllTopics();
-    setState(() {
-      _topics.clear();
-      _topics.addAll(topics);
-    });
-  } catch (e) {
-    // handle / show error
+  @override
+  void initState() {
+    super.initState();
+    _loadTopics();
   }
-}
+
+  Future<void> _loadTopics() async {
+    try {
+      final topics = await _topicService.fetchAllTopics();
+      setState(() {
+        _topics.clear();
+        _topics.addAll(topics);
+        topicQuizzes.clear();
+        for (final topic in topics) {
+          topicQuizzes[topic.id] = topic.quizQuestions;
+        }
+      });
+    } catch (e) {
+      // handle / show error
+    }
+  }
+
   // Track which topics are completed and quiz scores per topic
   final Set<String> _completed = <String>{};
   final Map<String, int> _quizScores = {};
@@ -109,10 +154,8 @@ Future<void> _loadTopics() async {
     // Show detail, then quiz, then mark as completed if quiz passed
     final bool? readDone = await Navigator.of(context).push<bool>(
       MaterialPageRoute(
-        builder: (_) => TopicDetailPage(
-          title: topic.title,
-          content: topic.content,
-        ),
+        builder: (_) =>
+            TopicDetailPage(title: topic.title, content: topic.content),
       ),
     );
     if (readDone == true) {

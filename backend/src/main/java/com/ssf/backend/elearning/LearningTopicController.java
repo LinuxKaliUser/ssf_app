@@ -17,14 +17,23 @@ public class LearningTopicController {
 
     @GetMapping
     public List<LearningTopic> all() {
+        System.out.println(learningTopicService.findAll());
         return learningTopicService.findAll();
+    }
+
+    // add this method to controller
+    @GetMapping("/by-topic-id/{topicId}")
+    public ResponseEntity<LearningTopic> byTopicId(@PathVariable String topicId) {
+        return learningTopicService.findByTopicId(topicId)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<LearningTopic> byId(@PathVariable Long id) {
         return learningTopicService.findById(id)
-            .map(ResponseEntity::ok)
-            .orElseGet(() -> ResponseEntity.notFound().build());
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping
